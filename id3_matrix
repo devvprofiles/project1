@@ -1,0 +1,89 @@
+#include "stdafx.h"
+#include <iostream>
+#include <cstdio>
+#include <stdlib.h>
+using namespace std;
+int main()
+{
+       //Матрицы
+	//Дана квадратная матрица целых чисел размером N*N (N – вводим с клавиатуры).
+	//Удалить все строки матрицы, которые содержат нули.
+	int mat[10][10];
+	int mat_2[10][10]; // где mat - основной массив, mat_2 - побочный массив
+	int mas_0[10];
+	int n;
+	int t = 0;                     // счетчик строк с нулями
+	bool is_null = false;
+	bool var_menu = true;
+	cout << "TASK 1:\n       There's given a square matrix of integer numbers of size N * N\n       (N is entered from the keyboard)." << endl
+		<< "       Delete all rows of the matrix that contain zeros.\n" << endl;
+	do {
+		cout << "Enter the number of lines and columns (n) of an matrix (not more then 10) : ";
+		cin >> n;
+	} while (n > 10);
+	int choise;
+	cout << "\nMenu: insert TEST number :\n +if you press number '1', data entered by rand()%10 " << endl <<
+		" +if you press number '2', data enterd by rand()%1 and rand()%5 (2 first row are 0)" << endl <<
+		"\nPlease, choose the test number : ";
+	do {             //Цикл проверки выбора пунктов меню
+		cin >> choise;
+		switch (choise)
+		{
+		case 1:
+
+			cout << "\n 'TEST 1-data entered by rand()% 10 returns numbers in the range 0 to 9'" << endl;
+			for (int i = 0; i < n; i++)
+				for (int j = 0; j < n; j++)
+					mat[i][j] = rand() % 10;
+			break;
+
+		case 2:
+			cout << "\n 'TEST 2-data entered by rand()%1 and rand()%5 (the first 2 rows are 0)'" << endl;
+			for (int i = 0; i < 2; i++)
+				for (int j = 0; j < n; j++)
+					mat[i][j] = rand() % 1;
+			for (int i = 2; i < n; i++)
+				for (int j = 0; j < n; j++)
+					mat[i][j] = rand() % 5;
+			break;
+
+		default: cout << "*Please, choose the method of menu running 1 or 2 : "; //отработка кода при выборе неправильного пункта меню
+		}
+		if (choise >= 1 && choise <= 2)
+			var_menu = false;
+
+	} while (var_menu);
+
+	for (int i = 0; i < n; i++, cout << endl)
+		for (int j = 0; j < n; j++, cout << " ")
+			cout << mat[i][j];
+	cout << endl;
+
+	for (int i = 0; i < n; i++) {
+		is_null = false;
+		for (int j = 0; j < n; j++) {
+			if (mat[i][j] == 0) {
+				is_null = true; break;
+			}
+		}
+		if (is_null == false) {
+			mas_0[t] = i;
+			t++;
+		}
+	}
+	cout << "Massiv strok s nenulevimi ellementami: ";
+
+	for (int i = 0; i < t; i++, cout << " ")cout << mas_0[i];
+	//
+	for (int k = 0; k < t; k++)
+		for (int j = 0; j < n; j++) {
+			int stroka = mas_0[k];
+			mat_2[k][j] = mat[stroka][j];
+		}
+	//вывод на экран матрицы, которая не содержит строки с нулями
+	cout << endl << "Resulted matrix:" << endl;
+	for (int i = 0; i < t; i++, cout << endl)
+		for (int j = 0; j < n; j++, cout << " ")
+			cout << mat_2[i][j];
+        return 0;
+}
